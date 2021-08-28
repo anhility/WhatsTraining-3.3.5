@@ -11,16 +11,16 @@
 Utils.lua
 Cache.lua
 
-#Classes\WotLK\DeathKnight.lua
-#Classes\WotLK\Druid.lua
-#Classes\WotLK\Hunter.lua
-#Classes\WotLK\Mage.lua
-Classes\WotLK\Paladin.lua
-#Classes\WotLK\Priest.lua
-#Classes\WotLK\Rogue.lua
-#Classes\WotLK\Shaman.lua
-#Classes\WotLK\Warlock.lua
-#Classes\WotLK\Warrior.lua
+#Classes\DeathKnight.lua
+#Classes\Druid.lua
+#Classes\Hunter.lua
+#Classes\Mage.lua
+Classes\Paladin.lua
+#Classes\Priest.lua
+#Classes\Rogue.lua
+#Classes\Shaman.lua
+#Classes\Warlock.lua
+#Classes\Warrior.lua
 
 Localization.lua
 WhatsTrainingUI.lua
