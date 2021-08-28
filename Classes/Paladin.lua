@@ -11,7 +11,7 @@ local _, wt = ...
 
 --[[
 	@brief		Check if the data should be loaded or not
-	@return		If not "Paladin", then return with nothing
+	@return		If not "PALADIN", then return with nothing
 --]]
 if (wt.currentClass ~= "PALADIN") then
 	return
@@ -38,7 +38,6 @@ wt:AddOverriddenSpells(devotionAura,layonHands,retributionAura,shadowResistanceA
 				{...},
 			},
 --]]
-
 wt.SpellsByLevel = wt.FactionFilter({
 	[1] =	{
 				{id = 465,   cost = 10},														-- Devotion Aura (rank 1)
