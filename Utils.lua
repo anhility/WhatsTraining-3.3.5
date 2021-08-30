@@ -1,11 +1,11 @@
 --[[	file meta info
 	@file		Utils.lua
-	@brief		Utility functions
+	@brief		Utility functions. Filtering and table injections.
 --]]
 
 --[[
-	@param 		_			Local throwaway variable
-	@param		wt			Local table at variable lenght, accessable from main scope
+	@param 		_		Local throwaway variable
+	@param		wt		Local table at variable lenght, accessable from main scope
 --]]
 local _, wt = ...
 

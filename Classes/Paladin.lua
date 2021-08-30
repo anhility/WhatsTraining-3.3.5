@@ -4,8 +4,8 @@
 --]]
 
 --[[
-	@param 	_				Local throwaway variable
-	@param	wt	#table>		Local table at variable lenght, accessable from main scope
+	@param 		_		Local throwaway variable
+	@param		wt		Local table at variable lenght, accessable from main scope
 --]]
 local _, wt = ...
 
