@@ -11,18 +11,27 @@
 --]]
 local addonName, wt = ...
 
-local AVAILABLE_KEY = "available"
-local MISSINGREQS_KEY = "missingReqs"
-local NEXTLEVEL_KEY = "nextLevel"
-local NOTLEVEL_KEY = "notLevel"
-local MISSINGTALENT_KEY = "missingTalent"
-local IGNORED_KEY = "ignored"
-local KNOWN_KEY = "known"
-local KNOWN_PET_KEY = "knownPet"
-local PET_KEY = "pet"
-local COMINGSOON_FONT_COLOR_CODE = "|cff82c5ff"
-local MISSINGTALENT_FONT_COLOR_CODE = "|cffffffff"
-local PET_FONT_COLOR_CODE = "|cffffffff"
+--[[
+	@brief		"Constant" variables
+--]]
+local AVAILABLE_KEY =					"available"
+local MISSINGREQS_KEY =					"missingReqs"
+local NEXTLEVEL_KEY =					"nextLevel"
+local NOTLEVEL_KEY =					"notLevel"
+local MISSINGTALENT_KEY =				"missingTalent"
+local IGNORED_KEY =						"ignored"
+local KNOWN_KEY =						"known"
+-- Deprecated
+--[[
+local KNOWN_PET_KEY =					"knownPet"
+local PET_KEY =							"pet"
+--]]
+local COMINGSOON_FONT_COLOR_CODE =		"|cff82c5ff"
+local MISSINGTALENT_FONT_COLOR_CODE =	"|cffffffff"
+-- Deprecated
+--[[
+local PET_FONT_COLOR_CODE =				"|cffffffff"
+--]]
 
 local function isPreviouslyLearnedAbility(spellId)
 	if (wt.overriddenSpellsMap == nil or not wt.overriddenSpellsMap[spellId]) then
@@ -40,9 +49,16 @@ local function isPreviouslyLearnedAbility(spellId)
 end
 
 local function isAbilityKnown(spellId)
-	if (IsSpellKnown(spellId) or IsPlayerSpell(spellId) or
-		isPreviouslyLearnedAbility(spellId)) then return true end
-	if (not wt:IsPetAbility(spellId)) then return false end
+	if (IsSpellKnown(spellId) or
+		IsPlayerSpell(spellId) or
+		isPreviouslyLearnedAbility(spellId)) then
+		return true
+	end
+	-- deprecated
+	--[[
+	if (not wt:IsPetAbility(spellId)) then
+		return false
+	end
 	local info = wt:SpellInfo(spellId)
 
 	if (info.subText == nil or wt.learnedPetAbilityMap[info.name] == nil) then
@@ -50,10 +66,16 @@ local function isAbilityKnown(spellId)
 	end
 
 	return wt.learnedPetAbilityMap[info.name][info.subText]
+	--]]
 end
+
+
+-- other addon support
+--[[
 local function isIgnoredByCTP(spellId)
 	return wt.ctpDb ~= nil and wt.ctpDb[spellId]
 end
+--]]
 
 local headers = {
 	{
@@ -75,12 +97,16 @@ local headers = {
 		name = wt.L.NOTLEVEL_HEADER,
 		color = RED_FONT_COLOR_CODE,
 		key = NOTLEVEL_KEY
-	}, {
+	},
+	-- Deprecated
+	--[[
+	{
 		name = wt.L.PET_HEADER,
 		color = PET_FONT_COLOR_CODE,
 		key = PET_KEY
 		-- nameSort = true
-	}, {
+	}, --]]
+	{
 		name = wt.L.MISSINGTALENT_HEADER,
 		color = MISSINGTALENT_FONT_COLOR_CODE,
 		key = MISSINGTALENT_KEY,
@@ -97,13 +123,17 @@ local headers = {
 		hideLevel = true,
 		key = KNOWN_KEY,
 		nameSort = true
-	}, {
+	},
+	-- Deprecated
+	--[[
+	{
 		name = wt.L.KNOWN_PET_HEADER,
 		color = GRAY_FONT_COLOR_CODE,
 		hideLevel = true,
 		key = KNOWN_PET_KEY,
 		nameSort = true
 	}
+	--]]
 }
 
 local categories = {
@@ -133,6 +163,8 @@ wt.data = {}
 local function rebuildData(playerLevel, isLevelUpEvent)
 	categories:ClearSpells()
 	wipe(wt.data)
+	-- deprecated
+	--[[
 	if (wt.TomesByLevel) then
 		for _, tomesAtLevel in pairs(wt.TomesByLevel) do
 			for _, tome in ipairs(tomesAtLevel) do
@@ -145,6 +177,7 @@ local function rebuildData(playerLevel, isLevelUpEvent)
 			end
 		end
 	end
+	--]]
 	for level, spellsAtLevel in pairs(wt.SpellsByLevel) do
 		for _, spell in ipairs(spellsAtLevel) do
 			local spellInfo = wt:SpellInfo(spell.id)
@@ -152,12 +185,22 @@ local function rebuildData(playerLevel, isLevelUpEvent)
 				local categoryKey
 
 				if (isAbilityKnown(spellInfo.id)) then
+					categoryKey = KNOWN_KEY
+					-- deprecated
+					--[[
 					categoryKey = wt:IsPetAbility(spellInfo.id) and
 									  KNOWN_PET_KEY or KNOWN_KEY
+					--]]
+				-- other addon support
+				--[[
 				elseif (isIgnoredByCTP(spellInfo.id)) then
 					categoryKey = IGNORED_KEY
+				--]]
+				-- deprecated
+				--[[
 				elseif (wt:IsPetAbility(spellInfo.id)) then
 					categoryKey = PET_KEY
+				--]]
 				elseif (spell.requiredTalentId ~= nil and
 					not isAbilityKnown(spell.requiredTalentId)) then
 					categoryKey = MISSINGTALENT_KEY
@@ -181,11 +224,15 @@ local function rebuildData(playerLevel, isLevelUpEvent)
 	end
 
 	local function byLevelThenName(a, b)
-		if (a.level == b.level) then return a.name < b.name end
+		if (a.level == b.level) then
+			return a.name < b.name
+		end
 		return a.level < b.level
 	end
 	local function byNameThenLevel(a, b)
-		if (a.name == b.name) then return a.level < b.level end
+		if (a.name == b.name) then
+			return a.level < b.level
+		end
 		return a.name < b.name
 	end
 	for _, category in ipairs(categories) do
@@ -195,6 +242,8 @@ local function rebuildData(playerLevel, isLevelUpEvent)
 								 byLevelThenName
 			sort(category.spells, sortFunc)
 			local totalCost = 0
+			-- deprecated
+			--[[
 			if (category.key == PET_KEY and WT_NeedsToOpenBeastTraining == true) then
 				tinsert(wt.data, {
 					formattedName = ORANGE_FONT_COLOR_CODE ..
@@ -205,6 +254,7 @@ local function rebuildData(playerLevel, isLevelUpEvent)
 					click = function() CastSpellByID(5149) end
 				})
 			end
+			--]]
 			for _, s in ipairs(category.spells) do
 				local effectiveLevel = s.level
 				-- when a player levels up and this is triggered from that event, GetQuestDifficultyColor won't
@@ -222,6 +272,7 @@ local function rebuildData(playerLevel, isLevelUpEvent)
 	end
 	if (wt.MainFrame == nil) then return end
 end
+
 local function rebuildIfNotCached(fromCache)
 	if (fromCache or wt.MainFrame == nil) then return end
 	rebuildData(UnitLevel("player"))
@@ -234,11 +285,16 @@ function wt:RebuildData()
 	end
 end
 
+-- deprecated
+--[[
 function wt.afterPetUpdate()
 	WT_NeedsToOpenBeastTraining = false
 	wt:RebuildData()
 end
+--]]
 
+-- deprecated
+--[[
 function wt.onSpellLearned(name)
 	local petAbility = wt:PetAbility(name)
 	if (petAbility == nil) then return end
@@ -252,7 +308,10 @@ function wt.onSpellLearned(name)
 	end
 	wt:RebuildData()
 end
+--]]
 
+-- deprecated
+--[[
 if (wt.TomesByLevel) then
 	for level, tomesByLevel in pairs(wt.TomesByLevel) do
 		for _, tome in ipairs(tomesByLevel) do
@@ -260,33 +319,40 @@ if (wt.TomesByLevel) then
 		end
 	end
 end
+--]]
+
 for level, spellsByLevel in pairs(wt.SpellsByLevel) do
 	for _, spell in ipairs(spellsByLevel) do
 		wt:CacheSpell(spell, level, rebuildIfNotCached)
 	end
 end
 
+-- Other addon support
+-- [[
 if (HookCTPUpdate) then
 	wt.ctpDb = ClassTrainerPlusDBPC
 	HookCTPUpdate(function()
 		wt:RebuildData()
 	end)
 end
+--]]
 
 local eventFrame = CreateFrame("Frame")
 eventFrame:SetScript("OnEvent", function(self, event, ...)
+	-- deprecated
+	--[[
 	if (event == "ADDON_LOADED" and ... == addonName) then
 		if (WT_LearnedPetAbilities == nil) then
 			WT_LearnedPetAbilities = {}
 			WT_NeedsToOpenBeastTraining = wt.currentClass == "HUNTER"
 		end
-
 		wt.learnedPetAbilityMap = WT_LearnedPetAbilities
 		if (WT_NeedsToOpenBeastTraining == nil and wt.currentClass == "HUNTER") then
 			WT_NeedsToOpenBeastTraining = true
 		end
 		self:UnregisterEvent("ADDON_LOADED")
-	elseif (event == "PLAYER_ENTERING_WORLD") then
+		--]]
+	if (event == "PLAYER_ENTERING_WORLD") then
 		local isLogin, isReload = ...
 		if (isLogin or isReload) then
 			rebuildData(UnitLevel("player"))
@@ -300,11 +366,17 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 		end
 	end
 end)
+
+--deprecated
+--[[
 eventFrame:RegisterEvent("ADDON_LOADED")
+--]]
 eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 eventFrame:RegisterEvent("LEARNED_SPELL_IN_TAB")
 eventFrame:RegisterEvent("PLAYER_LEVEL_UP")
 
+-- deprecated
+--[[
 if (wt.currentClass == "WARLOCK") then
 	local scan = CreateFrame("GameTooltip", "WTWarlockTomeScanningTooltip", nil,
 							 "GameTooltipTemplate")
@@ -380,7 +452,10 @@ if (wt.currentClass == "WARLOCK") then
 	end
 	hooksecurefunc("MerchantFrame_UpdateMerchantInfo", updateMerchantFrame)
 end
+--]]
 
+-- deprecated
+--[[
 if (wt.currentClass == "HUNTER") then
 	local petAbilityUpdateFrame = CreateFrame("Frame")
 	petAbilityUpdateFrame:SetScript("OnEvent", function()
@@ -415,3 +490,4 @@ if (wt.currentClass == "HUNTER") then
 	end)
 	petChatParserFrame:RegisterEvent("CHAT_MSG_SYSTEM")
 end
+--]]

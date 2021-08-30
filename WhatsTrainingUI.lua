@@ -11,18 +11,32 @@
 --]]
 local _, wt = ...
 
-local BOOKTYPE_SPELL = BOOKTYPE_SPELL
 
-local MAX_ROWS = 22
-local ROW_HEIGHT = 14
-local SKILL_LINE_TAB = MAX_SKILLLINE_TABS - 1
-local HIGHLIGHT_TEXTURE_FILEID = GetFileIDFromPath("Interface\\AddOns\\WhatsTraining\\highlight")
-local LEFT_BG_TEXTURE_FILEID = GetFileIDFromPath("Interface\\AddOns\\WhatsTraining\\left")
-local RIGHT_BG_TEXTURE_FILEID = GetFileIDFromPath("Interface\\AddOns\\WhatsTraining\\right")
-local TAB_TEXTURE_FILEID = GetFileIDFromPath("Interface\\Icons\\INV_Misc_QuestionMark")
+--[[
+	@brief		"Constant" variables
+--]]
+local BOOKTYPE_SPELL =			BOOKTYPE_SPELL				-- Used to specify the players spellbook from in-game constant
+local MAX_ROWS =				22							-- Max rows for the data shown in the spellbook
+local ROW_HEIGHT =				14							-- Height of each row in the spellbook
+local SKILL_LINE_TAB =			MAX_SKILLLINE_TABS - 1		-- Position for the addons tab in the spellbook
+local HIGHLIGHT_TEXTURE_PATH =	"Interface\\AddOns\\WhatsTraining\\res\\highlight"
+local LEFT_BG_TEXTURE_PATH =	"Interface\\AddOns\\WhatsTraining\\res\\left"
+local RIGHT_BG_TEXTURE_PATH =	"Interface\\AddOns\\WhatsTraining\\res\\right"
+local TAB_TEXTURE_PATH =		"Interface\\Icons\\INV_Misc_QuestionMark"
 
-local tooltip = CreateFrame("GameTooltip", "WhatsTrainingTooltip", UIParent,
-							"GameTooltipTemplate")
+
+--[[
+	@brief	Creating the tooltip frame
+--]]
+local tooltip = CreateFrame("GameTooltip",				-- Type of frame
+							"WhatsTrainingTooltip",		-- Name of frame, globally accessable
+							UIParent,					-- Parent frame
+							"GameTooltipTemplate")		-- Template to use building the frame
+--[[
+	@brief
+
+	@param		spellInfo
+--]]
 local function setTooltip(spellInfo)
 	if (spellInfo.isItem) then
 		tooltip:SetItemByID(spellInfo.id)
@@ -65,7 +79,7 @@ local function setRowSpell(row, spell)
 		local rowSpell = row.spell
 		row.header:Hide()
 		row.isHeader = false
-		row.highlight:SetTexture(HIGHLIGHT_TEXTURE_FILEID)
+		row.highlight:SetTexture(HIGHLIGHT_TEXTURE_PATH)
 		rowSpell:Show()
 		rowSpell.label:SetText(spell.name)
 		rowSpell.subLabel:SetText(spell.formattedSubText)
@@ -123,12 +137,12 @@ function wt.CreateFrame()
 	mainFrame:SetPoint("BOTTOMRIGHT", SpellBookFrame, "BOTTOMRIGHT", 0, 0)
 	mainFrame:SetFrameStrata("HIGH")
 	local left = mainFrame:CreateTexture(nil, "ARTWORK")
-	left:SetTexture(LEFT_BG_TEXTURE_FILEID)
+	left:SetTexture(LEFT_BG_TEXTURE_PATH)
 	left:SetWidth(256)
 	left:SetHeight(512)
 	left:SetPoint("TOPLEFT", mainFrame)
 	local right = mainFrame:CreateTexture(nil, "ARTWORK")
-	right:SetTexture(RIGHT_BG_TEXTURE_FILEID)
+	right:SetTexture(RIGHT_BG_TEXTURE_PATH)
 	right:SetWidth(128)
 	right:SetHeight(512)
 	right:SetPoint("TOPRIGHT", mainFrame)
@@ -136,7 +150,7 @@ function wt.CreateFrame()
 
 	local skillLineTab = _G["SpellBookSkillLineTab" .. SKILL_LINE_TAB]
 	hooksecurefunc("SpellBookFrame_UpdateSkillLineTabs", function()
-		skillLineTab:SetNormalTexture(TAB_TEXTURE_FILEID)
+		skillLineTab:SetNormalTexture(TAB_TEXTURE_PATH)
 		skillLineTab.tooltip = wt.L.TAB_TEXT
 		skillLineTab:Show()
 		if (SpellBookFrame.selectedSkillLine == SKILL_LINE_TAB) then
@@ -246,6 +260,9 @@ function wt.CreateFrame()
 	wt.MainFrame = mainFrame
 end
 
+
+-- Deprecated
+--[[
 if (wt.currentClass ~= "WARLOCK") then return end
 
 local menuFrame = CreateFrame("Frame", "WTWarlockTomeLearnedFrame", UIParent,
@@ -270,3 +287,4 @@ wt.ClickHook = function(tomeId, afterClick)
 	}
 	EasyMenu(menu, menuFrame, "cursor", 10, 35, "MENU")
 end
+--]]

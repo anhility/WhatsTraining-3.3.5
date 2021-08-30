@@ -17,7 +17,6 @@ local ipairs = ipairs
 
 --	Get player class
 wt.currentClass = select(2, UnitClass("player"))
-
 --[[
 	@brief		Filtering function of spells table with custom predicate
 
@@ -71,11 +70,14 @@ function wt:AddOverriddenSpells(...)
 	self.overriddenSpellsMap = abilityMap			-- Creates new table in global scope and insert data from local table
 end
 
+-- Deprecated
 --[[
 	@brief		Check if table for pet abilites is filled
 
-	@return		If not nil, return table with spell IDs for pet
+	@return		If not nil, return true if spell id is found in table
 --]]
+--[[
 function wt:IsPetAbility(spellId)
 	return self.PetAbilityIds ~= nil and self.PetAbilityIds[spellId]
 end
+--]]

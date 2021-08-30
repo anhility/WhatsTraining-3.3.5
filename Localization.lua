@@ -21,17 +21,23 @@ local localeText = {
 		MISSINGTALENT_HEADER =	"Missing Required Talents",
 		IGNORED_HEADER =		"Ignored",
 		KNOWN_HEADER =			"Already Known",
+		-- Deprecated
+		--[[
 		KNOWN_PET_HEADER =		"Already Known (Pet)",
 		PET_HEADER =			"Pet Abilities",
+		--]]
 		COST_FORMAT =			"Cost: %s",
 		TOTALCOST_FORMAT =		"Total Cost: %s",
 		TOTALSAVINGS_FORMAT =	"Total Savings: %s",
 		LEVEL_FORMAT =			"Level %s",
 		TAB_TEXT =				"What can I train?",
+		-- Deprecated
+		--[[
 		OPEN_BEAST_TRAINING =	"Please open the Beast Training UI",
 		CLICK_TO_OPEN =			"Click to open Beast Training",
 		TOME_HEADER =			"Has this been learned?",
 		TOME_LEARNED =			"Grimoire learned"
+		--]]
 	},
 	frFR = {
 		AVAILABLE_HEADER =		"Disponible",
@@ -41,7 +47,7 @@ local localeText = {
 		MISSINGTALENT_HEADER =	"Talents requis manquants",
 		IGNORED_HEADER =		"Ignoré",
 		KNOWN_HEADER =			"Déjà connu",
-		PET_HEADER =			"Techniques de familier",
+		--PET_HEADER =			"Techniques de familier",
 		COST_FORMAT =			"Coût : %s",
 		TOTALCOST_FORMAT =		"Coût total : %s",
 		TOTALSAVINGS_FORMAT =	"Coût économisé : %s",
@@ -56,7 +62,7 @@ local localeText = {
 		MISSINGTALENT_HEADER =	"Отсутствующие необходимые таланты",
 		IGNORED_HEADER =		"Игнорируется",
 		KNOWN_HEADER =			"Уже известно",
-		PET_HEADER =			"Способности питомца",
+		--PET_HEADER =			"Способности питомца",
 		COST_FORMAT =			"Стоимость: %s",
 		TOTALCOST_FORMAT =		"Общая стоимость: %s",
 		TOTALSAVINGS_FORMAT =	"Все сбережения: %s",
@@ -71,7 +77,7 @@ local localeText = {
 		MISSINGTALENT_HEADER =	"缺少相关天赋",
 		IGNORED_HEADER =		"已忽略技能",
 		KNOWN_HEADER =			"已学技能",
-		PET_HEADER =			"宠物技能",
+		--PET_HEADER =			"宠物技能",
 		COST_FORMAT =			"花费: %s",
 		TOTALCOST_FORMAT =		"总花费: %s",
 		TOTALSAVINGS_FORMAT =	"总共节省: %s",
@@ -86,7 +92,7 @@ local localeText = {
 		MISSINGTALENT_HEADER =	"缺少需要的天賦",
 		IGNORED_HEADER =		"已忽略",
 		KNOWN_HEADER =			"已學會",
-		PET_HEADER =			"寵物技能",
+		--PET_HEADER =			"寵物技能",
 		COST_FORMAT =			"花費: %s",
 		TOTALCOST_FORMAT =		"總需花費: %s",
 		TOTALSAVINGS_FORMAT =	"總共省下: %s",
@@ -101,7 +107,7 @@ local localeText = {
 		MISSINGTALENT_HEADER =	"Fehlende Talente",
 		IGNORED_HEADER =		"Ignoriert",
 		KNOWN_HEADER =			"Bereits bekannt",
-		PET_HEADER =			"Pet Fähigkeiten",
+		--PET_HEADER =			"Pet Fähigkeiten",
 		COST_FORMAT =			"Kosten: %s",
 		TOTALCOST_FORMAT =		"Gesamtkosten: %s",
 		TOTALSAVINGS_FORMAT =	"Gesamtersparnis: %s",
@@ -116,7 +122,7 @@ local localeText = {
 		MISSINGTALENT_HEADER =	"필수 특성 누락",
 		IGNORED_HEADER =		"무시됨",
 		KNOWN_HEADER =			"이미 배움",
-		PET_HEADER =			"소환수 능력",
+		--PET_HEADER =			"소환수 능력",
 		COST_FORMAT =			"비용: %s",
 		TOTALCOST_FORMAT =		"총 비용: %s",
 		TOTALSAVINGS_FORMAT =	"총 절감: %s",

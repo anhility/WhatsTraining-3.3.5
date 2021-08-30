@@ -3,8 +3,8 @@
 ## Version: 3.0.0
 ## Author: Sveng
 ## Notes: Shows you what spells are available at your class trainer
-## SavedVariablesPerCharacter: WT_LearnedPetAbilities, WT_NeedsToOpenBeastTraining
-## OptionalDeps: ClassTrainerPlus
+# SavedVariablesPerCharacter: WT_LearnedPetAbilities, WT_NeedsToOpenBeastTraining	-- commented out, delete later
+# OptionalDeps: ClassTrainerPlus	-- commented out, delete later
 ## X-Curse-Project-ID: 324944
 ## X-WoWI-ID: 25031
 

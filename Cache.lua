@@ -11,8 +11,13 @@
 --]]
 local _, wt = ...
 
--- Spell Cache
+--[[
+	@brief		Tables for Spell Cache
+--]]
+-- deprecated
+--[[
 wt.petAbilities = {}
+--]]
 wt.spellInfoCache = {}
 
 -- done has param cacheHit
@@ -41,6 +46,8 @@ function wt:CacheSpell(spell, level, done)
 			level = level,
 			formattedLevel = format(wt.L.LEVEL_FORMAT, level)
 		}
+		-- deprecated
+		--[[
 		if (self:IsPetAbility(spell.id)) then
 			if (formattedSubText ~= "") then
 				self.petAbilities[si:GetSpellName() .. " " .. formattedSubText] =
@@ -50,6 +57,7 @@ function wt:CacheSpell(spell, level, done)
 					self.spellInfoCache[spell.id]
 			end
 		end
+		--]]
 		done(false)
 	end)
 end
@@ -58,10 +66,15 @@ function wt:SpellInfo(spellId)
 	return self.spellInfoCache[spellId]
 end
 
+-- deprecated
+--[[
 function wt:PetAbility(forName)
 	return self.petAbilities[forName]
 end
+--]]
 
+-- deprecated
+--[[
 -- Item Cache
 wt.itemInfoCache = {}
 -- for warlock pet tomes, the name includes the rank
@@ -98,3 +111,4 @@ end
 function wt:ItemInfo(itemId)
 	return self.itemInfoCache[itemId]
 end
+--]]
