@@ -4,8 +4,10 @@
 --]]
 
 --[[
-	@param 		_		Local throwaway variable
-	@param		wt		Local table at variable lenght, accessable from main scope
+	@brief		Accessing the addons private table
+
+	@var 	_		addonName, thrown awy
+	@var	wt		Global addonTable
 --]]
 local _, wt = ...
 

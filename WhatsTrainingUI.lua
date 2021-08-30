@@ -1,3 +1,14 @@
+--[[	file meta info
+	@file 		WhatsTrainingUI.lua
+	@brief		Functions to build the ingame UI window
+--]]
+
+--[[
+	@brief		Accessing the addons private table
+
+	@var 	_		addonName, thrown awy
+	@var	wt		Global addonTable
+--]]
 local _, wt = ...
 
 local BOOKTYPE_SPELL = BOOKTYPE_SPELL
@@ -5,14 +16,10 @@ local BOOKTYPE_SPELL = BOOKTYPE_SPELL
 local MAX_ROWS = 22
 local ROW_HEIGHT = 14
 local SKILL_LINE_TAB = MAX_SKILLLINE_TABS - 1
-local HIGHLIGHT_TEXTURE_FILEID = GetFileIDFromPath(
-                                     "Interface\\AddOns\\WhatsTraining\\highlight")
-local LEFT_BG_TEXTURE_FILEID = GetFileIDFromPath(
-                                   "Interface\\AddOns\\WhatsTraining\\left")
-local RIGHT_BG_TEXTURE_FILEID = GetFileIDFromPath(
-                                    "Interface\\AddOns\\WhatsTraining\\right")
-local TAB_TEXTURE_FILEID = GetFileIDFromPath(
-                               "Interface\\Icons\\INV_Misc_QuestionMark")
+local HIGHLIGHT_TEXTURE_FILEID = GetFileIDFromPath("Interface\\AddOns\\WhatsTraining\\highlight")
+local LEFT_BG_TEXTURE_FILEID = GetFileIDFromPath("Interface\\AddOns\\WhatsTraining\\left")
+local RIGHT_BG_TEXTURE_FILEID = GetFileIDFromPath("Interface\\AddOns\\WhatsTraining\\right")
+local TAB_TEXTURE_FILEID = GetFileIDFromPath("Interface\\Icons\\INV_Misc_QuestionMark")
 
 local tooltip = CreateFrame("GameTooltip", "WhatsTrainingTooltip", UIParent,
                             "GameTooltipTemplate")

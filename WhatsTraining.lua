@@ -1,3 +1,14 @@
+--[[	file meta info
+	@file 		WhatsTraining.lua
+	@brief		Main script
+--]]
+
+--[[
+	@brief		Accessing the addons private table
+
+	@var 	addonName		addonName from ToC
+	@var	wt				Global addonTable
+--]]
 local addonName, wt = ...
 
 local AVAILABLE_KEY = "available"
