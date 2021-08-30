@@ -6,7 +6,7 @@
 --[[
 	@brief		Accessing the addons private table
 
-	@var 	_		addonName, thrown awy
+	@var 	_		addonName, thrown away
 	@var	wt		Global addonTable
 --]]
 local _, wt = ...
