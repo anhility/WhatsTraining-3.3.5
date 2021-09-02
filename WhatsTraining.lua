@@ -41,7 +41,8 @@ local function isPreviouslyLearnedAbility(spellId)
 	local spellIndex, knownIndex = 0, 0
 	for i, otherId in ipairs(wt.overriddenSpellsMap[spellId]) do
 		if (otherId == spellId) then spellIndex = i end
-		if (IsSpellKnown(otherId) or IsPlayerSpell(otherId)) then
+		--if (IsSpellKnown(otherId) or IsPlayerSpell(otherId)) then
+		if (IsSpellKnown(otherId)) then
 			knownIndex = i
 		end
 	end
@@ -50,7 +51,7 @@ end
 
 local function isAbilityKnown(spellId)
 	if (IsSpellKnown(spellId) or
-		IsPlayerSpell(spellId) or
+		--IsPlayerSpell(spellId) or
 		isPreviouslyLearnedAbility(spellId)) then
 		return true
 	end
@@ -328,7 +329,7 @@ for level, spellsByLevel in pairs(wt.SpellsByLevel) do
 end
 
 -- Other addon support
--- [[
+--[[
 if (HookCTPUpdate) then
 	wt.ctpDb = ClassTrainerPlusDBPC
 	HookCTPUpdate(function()
@@ -354,10 +355,10 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 		--]]
 	if (event == "PLAYER_ENTERING_WORLD") then
 		local isLogin, isReload = ...
-		if (isLogin or isReload) then
-			rebuildData(UnitLevel("player"))
-			wt.CreateFrame()
-		end
+		--if (isLogin or isReload) then
+		rebuildData(UnitLevel("player"))
+		wt.CreateFrame()
+		--end
 	elseif (event == "LEARNED_SPELL_IN_TAB" or event == "PLAYER_LEVEL_UP") then
 		local isLevelUp = event == "PLAYER_LEVEL_UP"
 		rebuildData(isLevelUp and ... or UnitLevel("player"), isLevelUp)

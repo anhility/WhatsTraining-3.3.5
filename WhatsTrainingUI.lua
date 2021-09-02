@@ -38,9 +38,13 @@ local tooltip = CreateFrame("GameTooltip",				-- Type of frame
 	@param		spellInfo
 --]]
 local function setTooltip(spellInfo)
+	-- deprecated
+	--[[
 	if (spellInfo.isItem) then
 		tooltip:SetItemByID(spellInfo.id)
 	elseif (spellInfo.id) then
+	--]]
+	if (spellInfo.id) then
 		tooltip:SetSpellByID(spellInfo.id)
 	else
 		tooltip:ClearLines()
@@ -126,7 +130,7 @@ function wt.Update(frame, forceUpdate)
 		setRowSpell(row, spell)
 	end
 	FauxScrollFrame_Update(wt.MainFrame.scrollBar, #wt.data, MAX_ROWS,
-						   ROW_HEIGHT, nil, nil, nil, nil, nil, nil, true)
+							ROW_HEIGHT, nil, nil, nil, nil, nil, nil, true)
 	lastOffset = offset
 end
 
@@ -149,7 +153,8 @@ function wt.CreateFrame()
 	mainFrame:Hide()
 
 	local skillLineTab = _G["SpellBookSkillLineTab" .. SKILL_LINE_TAB]
-	hooksecurefunc("SpellBookFrame_UpdateSkillLineTabs", function()
+--	hooksecurefunc("SpellBookFrame_UpdateSkillLineTabs", function()
+	hooksecurefunc("SpellBookFrame_Update", function()
 		skillLineTab:SetNormalTexture(TAB_TEXTURE_PATH)
 		skillLineTab.tooltip = wt.L.TAB_TEXT
 		skillLineTab:Show()
@@ -219,7 +224,11 @@ function wt.CreateFrame()
 		spellLabel:SetJustifyH("LEFT")
 		local spellSublabel = spell:CreateFontString("$parentSubLabel",
 													 "OVERLAY",
-													 "NewSubSpellFont")
+													 --"NewSubSpellFont")
+													 "SpellFont_Small")
+		-- test
+		spellSublabel:SetTextColor(255/255, 255/255, 153/255)	-- Works!
+		--test end
 		spellSublabel:SetJustifyH("LEFT")
 		spellSublabel:SetPoint("TOPLEFT", spellLabel, "TOPRIGHT", 2, 0)
 		spellSublabel:SetPoint("BOTTOM", spellLabel)
