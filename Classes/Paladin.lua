@@ -93,7 +93,7 @@ wt.SpellsByLevel = wt.FactionFilter({
 				{id =  5502, cost =   4000},													-- Sense Undead
 				{id = 13819, cost =   3500, faction = "Alliance"},								-- Warhorse
 				{id = 34769, cost =   3500, faction = "Horde"},									-- Summon Warhorse
-				{id =   200, cost =  10000},													-- Polearms
+--				{id =   200, cost =  10000},													-- Polearms
 			},
 	[22] =	{
 				{id = 19835, cost =   4000, requiredIds = {19834}},								-- Blessing of Might (rank 3)
@@ -153,7 +153,7 @@ wt.SpellsByLevel = wt.FactionFilter({
 				{id = 19895, cost =  20000, requiredIds = {19876}},								-- Shadow Resistance Aura (rank 2)
 				{id = 23214, cost =   3500, faction = "Alliance"},								-- Charger
 				{id = 34767, cost =   3500, faction = "Horde"},									-- Summon Charger
-				{id =   750, cost =  20000},													-- Plate Mail
+--				{id =   750, cost =  20000},													-- Plate Mail
 			},
 	[42] =	{
 				{id = 19837, cost =  21000, requiredIds = {19836}},								-- Blessing of Might (rank 5)
