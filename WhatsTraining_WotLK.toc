@@ -1,7 +1,7 @@
 ## Interface: 30300
 ## Title: What's Training?
 ## Version: 3.3.0
-## Author: Sveng, Anhility
+## Author: Sveng, Anhility (3.3.5 backport)
 ## Notes: Shows you what spells are available at your class trainer
 
 Utils.lua
