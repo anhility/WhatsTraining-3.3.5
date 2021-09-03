@@ -1,5 +1,5 @@
 ======================
-What's Training? 3.3.5
+What's Training? WotLK
 ======================
 What's Training? is an backported addon for World of Warcraft 3.3.5 (WotLK) that adds a list of all the spell for you class in a new tab in the spell book.
 
