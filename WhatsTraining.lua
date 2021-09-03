@@ -19,7 +19,10 @@ local MISSINGREQS_KEY =					"missingReqs"
 local NEXTLEVEL_KEY =					"nextLevel"
 local NOTLEVEL_KEY =					"notLevel"
 local MISSINGTALENT_KEY =				"missingTalent"
+-- deprecated
+--[[
 local IGNORED_KEY =						"ignored"
+--]]
 local KNOWN_KEY =						"known"
 -- Deprecated
 --[[
@@ -112,13 +115,18 @@ local headers = {
 		color = MISSINGTALENT_FONT_COLOR_CODE,
 		key = MISSINGTALENT_KEY,
 		nameSort = true
-	}, {
+	},
+	-- deprecated
+	--[[
+	{
 		name = wt.L.IGNORED_HEADER,
 		color = LIGHTYELLOW_FONT_COLOR_CODE,
 		costFormat = wt.L.TOTALSAVINGS_FORMAT,
 		key = IGNORED_KEY,
 		nameSort = true
-	}, {
+	},
+	--]]
+	{
 		name = wt.L.KNOWN_HEADER,
 		color = GRAY_FONT_COLOR_CODE,
 		hideLevel = true,
