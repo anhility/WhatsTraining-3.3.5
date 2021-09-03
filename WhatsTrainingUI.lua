@@ -19,9 +19,9 @@ local BOOKTYPE_SPELL =			BOOKTYPE_SPELL				-- Used to specify the players spellb
 local MAX_ROWS =				22							-- Max rows for the data shown in the spellbook
 local ROW_HEIGHT =				14							-- Height of each row in the spellbook
 local SKILL_LINE_TAB =			MAX_SKILLLINE_TABS - 1		-- Position for the addons tab in the spellbook
-local HIGHLIGHT_TEXTURE_PATH =	"Interface\\AddOns\\WhatsTraining\\res\\highlight"
-local LEFT_BG_TEXTURE_PATH =	"Interface\\AddOns\\WhatsTraining\\res\\left"
-local RIGHT_BG_TEXTURE_PATH =	"Interface\\AddOns\\WhatsTraining\\res\\right"
+local HIGHLIGHT_TEXTURE_PATH =	"Interface\\AddOns\\WhatsTraining_WotLK\\res\\highlight"
+local LEFT_BG_TEXTURE_PATH =	"Interface\\AddOns\\WhatsTraining_WotLK\\res\\left"
+local RIGHT_BG_TEXTURE_PATH =	"Interface\\AddOns\\WhatsTraining_WotLK\\res\\right"
 local TAB_TEXTURE_PATH =		"Interface\\Icons\\INV_Misc_QuestionMark"
 
 
