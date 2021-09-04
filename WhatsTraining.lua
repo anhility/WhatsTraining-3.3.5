@@ -11,9 +11,8 @@
 --]]
 local addonName, wt = ...
 
---[[
-	@brief		"Constant" variables
---]]
+
+-- @brief		"Constant" variables
 local AVAILABLE_KEY =					"available"
 local MISSINGREQS_KEY =					"missingReqs"
 local NEXTLEVEL_KEY =					"nextLevel"
