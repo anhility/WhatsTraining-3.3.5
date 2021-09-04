@@ -22,32 +22,6 @@ function wt:CacheSpell(spell, level, done)
 		done(true)
 		return
 	end
-	-- SpellMixing start
-	--[[
-	local si = Spell:CreateFromSpellID(spell.id)
-	si:ContinueOnSpellLoad(function()
-		if (self.spellInfoCache[spell.id] ~= nil) then
-			done(true)
-			return
-		end
-		local subText = si:GetSpellSubtext()
-		local formattedSubText = (subText and subText ~= "") and
-									 format(PARENS_TEMPLATE, subText) or ""
-		self.spellInfoCache[spell.id] = {
-			id = spell.id,
-			name = si:GetSpellName(),
-			subText = subText,
-			formattedSubText = formattedSubText,
-			icon = select(3, GetSpellInfo(spell.id)),
-			cost = spell.cost,
-			formattedCost = GetCoinTextureString(spell.cost),
-			level = level,
-			formattedLevel = format(wt.L.LEVEL_FORMAT, level)
-		}
-		done(false)
-	end)
-	--]]
-	-- SpellMixing End
 	if (self.spellInfoCache[spell.id] ~= nil) then
 		done(true)
 		return
