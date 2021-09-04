@@ -19,22 +19,9 @@ local MISSINGREQS_KEY =					"missingReqs"
 local NEXTLEVEL_KEY =					"nextLevel"
 local NOTLEVEL_KEY =					"notLevel"
 local MISSINGTALENT_KEY =				"missingTalent"
--- deprecated
---[[
-local IGNORED_KEY =						"ignored"
---]]
 local KNOWN_KEY =						"known"
--- Deprecated
---[[
-local KNOWN_PET_KEY =					"knownPet"
-local PET_KEY =							"pet"
---]]
 local COMINGSOON_FONT_COLOR_CODE =		"|cff82c5ff"
 local MISSINGTALENT_FONT_COLOR_CODE =	"|cffffffff"
--- Deprecated
---[[
-local PET_FONT_COLOR_CODE =				"|cffffffff"
---]]
 
 local function isPreviouslyLearnedAbility(spellId)
 	if (wt.overriddenSpellsMap == nil or not wt.overriddenSpellsMap[spellId]) then
@@ -58,28 +45,7 @@ local function isAbilityKnown(spellId)
 		isPreviouslyLearnedAbility(spellId)) then
 		return true
 	end
-	-- deprecated
-	--[[
-	if (not wt:IsPetAbility(spellId)) then
-		return false
-	end
-	local info = wt:SpellInfo(spellId)
-
-	if (info.subText == nil or wt.learnedPetAbilityMap[info.name] == nil) then
-		return false
-	end
-
-	return wt.learnedPetAbilityMap[info.name][info.subText]
-	--]]
 end
-
-
--- other addon support
---[[
-local function isIgnoredByCTP(spellId)
-	return wt.ctpDb ~= nil and wt.ctpDb[spellId]
-end
---]]
 
 local headers = {
 	{
@@ -101,48 +67,18 @@ local headers = {
 		name = wt.L.NOTLEVEL_HEADER,
 		color = RED_FONT_COLOR_CODE,
 		key = NOTLEVEL_KEY
-	},
-	-- Deprecated
-	--[[
-	{
-		name = wt.L.PET_HEADER,
-		color = PET_FONT_COLOR_CODE,
-		key = PET_KEY
-		-- nameSort = true
-	}, --]]
-	{
+	},{
 		name = wt.L.MISSINGTALENT_HEADER,
 		color = MISSINGTALENT_FONT_COLOR_CODE,
 		key = MISSINGTALENT_KEY,
 		nameSort = true
-	},
-	-- deprecated
-	--[[
-	{
-		name = wt.L.IGNORED_HEADER,
-		color = LIGHTYELLOW_FONT_COLOR_CODE,
-		costFormat = wt.L.TOTALSAVINGS_FORMAT,
-		key = IGNORED_KEY,
-		nameSort = true
-	},
-	--]]
-	{
+	},{
 		name = wt.L.KNOWN_HEADER,
 		color = GRAY_FONT_COLOR_CODE,
 		hideLevel = true,
 		key = KNOWN_KEY,
 		nameSort = true
 	},
-	-- Deprecated
-	--[[
-	{
-		name = wt.L.KNOWN_PET_HEADER,
-		color = GRAY_FONT_COLOR_CODE,
-		hideLevel = true,
-		key = KNOWN_PET_KEY,
-		nameSort = true
-	}
-	--]]
 }
 
 local categories = {
@@ -172,21 +108,6 @@ wt.data = {}
 local function rebuildData(playerLevel, isLevelUpEvent)
 	categories:ClearSpells()
 	wipe(wt.data)
-	-- deprecated
-	--[[
-	if (wt.TomesByLevel) then
-		for _, tomesAtLevel in pairs(wt.TomesByLevel) do
-			for _, tome in ipairs(tomesAtLevel) do
-				local itemInfo = wt:ItemInfo(tome.id)
-				if (itemInfo ~= nil) then
-					local key = wt.learnedPetAbilityMap[tome.id] and
-									KNOWN_PET_KEY or PET_KEY
-					categories:Insert(key, itemInfo)
-				end
-			end
-		end
-	end
-	--]]
 	for level, spellsAtLevel in pairs(wt.SpellsByLevel) do
 		for _, spell in ipairs(spellsAtLevel) do
 			local spellInfo = wt:SpellInfo(spell.id)
@@ -195,21 +116,6 @@ local function rebuildData(playerLevel, isLevelUpEvent)
 
 				if (isAbilityKnown(spellInfo.id)) then
 					categoryKey = KNOWN_KEY
-					-- deprecated
-					--[[
-					categoryKey = wt:IsPetAbility(spellInfo.id) and
-									  KNOWN_PET_KEY or KNOWN_KEY
-					--]]
-				-- other addon support
-				--[[
-				elseif (isIgnoredByCTP(spellInfo.id)) then
-					categoryKey = IGNORED_KEY
-				--]]
-				-- deprecated
-				--[[
-				elseif (wt:IsPetAbility(spellInfo.id)) then
-					categoryKey = PET_KEY
-				--]]
 				elseif (spell.requiredTalentId ~= nil and
 					not isAbilityKnown(spell.requiredTalentId)) then
 					categoryKey = MISSINGTALENT_KEY
@@ -251,19 +157,6 @@ local function rebuildData(playerLevel, isLevelUpEvent)
 								 byLevelThenName
 			sort(category.spells, sortFunc)
 			local totalCost = 0
-			-- deprecated
-			--[[
-			if (category.key == PET_KEY and WT_NeedsToOpenBeastTraining == true) then
-				tinsert(wt.data, {
-					formattedName = ORANGE_FONT_COLOR_CODE ..
-						wt.L.OPEN_BEAST_TRAINING .. FONT_COLOR_CODE_CLOSE,
-					isHeader = true,
-					cost = 0,
-					tooltip = wt.L.CLICK_TO_OPEN,
-					click = function() CastSpellByID(5149) end
-				})
-			end
-			--]]
 			for _, s in ipairs(category.spells) do
 				local effectiveLevel = s.level
 				-- when a player levels up and this is triggered from that event, GetQuestDifficultyColor won't
@@ -294,73 +187,14 @@ function wt:RebuildData()
 	end
 end
 
--- deprecated
---[[
-function wt.afterPetUpdate()
-	WT_NeedsToOpenBeastTraining = false
-	wt:RebuildData()
-end
---]]
-
--- deprecated
---[[
-function wt.onSpellLearned(name)
-	local petAbility = wt:PetAbility(name)
-	if (petAbility == nil) then return end
-	if (petAbility.subText) then
-		if (wt.learnedPetAbilityMap[petAbility.name] == nil) then
-			wt.learnedPetAbilityMap[petAbility.name] = {}
-		end
-		wt.learnedPetAbilityMap[petAbility.name][petAbility.subText] = true
-	else
-		WT_NeedsToOpenBeastTraining = true
-	end
-	wt:RebuildData()
-end
---]]
-
--- deprecated
---[[
-if (wt.TomesByLevel) then
-	for level, tomesByLevel in pairs(wt.TomesByLevel) do
-		for _, tome in ipairs(tomesByLevel) do
-			wt:CacheItem(tome, level, rebuildIfNotCached)
-		end
-	end
-end
---]]
-
 for level, spellsByLevel in pairs(wt.SpellsByLevel) do
 	for _, spell in ipairs(spellsByLevel) do
 		wt:CacheSpell(spell, level, rebuildIfNotCached)
 	end
 end
 
--- Other addon support
---[[
-if (HookCTPUpdate) then
-	wt.ctpDb = ClassTrainerPlusDBPC
-	HookCTPUpdate(function()
-		wt:RebuildData()
-	end)
-end
---]]
-
 local eventFrame = CreateFrame("Frame")
 eventFrame:SetScript("OnEvent", function(self, event, ...)
-	-- deprecated
-	--[[
-	if (event == "ADDON_LOADED" and ... == addonName) then
-		if (WT_LearnedPetAbilities == nil) then
-			WT_LearnedPetAbilities = {}
-			WT_NeedsToOpenBeastTraining = wt.currentClass == "HUNTER"
-		end
-		wt.learnedPetAbilityMap = WT_LearnedPetAbilities
-		if (WT_NeedsToOpenBeastTraining == nil and wt.currentClass == "HUNTER") then
-			WT_NeedsToOpenBeastTraining = true
-		end
-		self:UnregisterEvent("ADDON_LOADED")
-		--]]
 	if (event == "PLAYER_ENTERING_WORLD") then
 		local isLogin, isReload = ...
 		--if (isLogin or isReload) then
@@ -376,127 +210,6 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 	end
 end)
 
---deprecated
---[[
-eventFrame:RegisterEvent("ADDON_LOADED")
---]]
 eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 eventFrame:RegisterEvent("LEARNED_SPELL_IN_TAB")
 eventFrame:RegisterEvent("PLAYER_LEVEL_UP")
-
--- deprecated
---[[
-if (wt.currentClass == "WARLOCK") then
-	local scan = CreateFrame("GameTooltip", "WTWarlockTomeScanningTooltip", nil,
-							 "GameTooltipTemplate")
-	scan:SetOwner(UIParent, "ANCHOR_NONE")
-	local requiresLevelPattern = SPELL_REQUIRED_FORM .. '?'
-	local function isKnown(merchantIndex)
-		scan:ClearLines()
-		local link = GetMerchantItemLink(merchantIndex)
-		if (not link) then return false end
-		scan:SetHyperlink(link)
-		local lines = scan:NumLines()
-		for i = lines, 1, -1 do
-			local text =
-				_G['WTWarlockTomeScanningTooltipTextLeft' .. i]:GetText()
-			-- the "Requires Level x" line is above the "Already Known" line
-			-- we can stop searching when we hit it
-			if (string.match(text, requiresLevelPattern)) then
-				return false
-			end
-			if (text == ITEM_SPELL_KNOWN) then return true end
-		end
-		return false
-	end
-
-	local tomeMerchantIds = {
-		[5520] = true,
-		[5753] = true,
-		[1277] = true,
-		[6027] = true,
-		[6374] = true,
-		[6373] = true,
-		[6376] = true,
-		[1280] = true,
-		[5749] = true,
-		[5750] = true,
-		[6382] = true,
-		[5815] = true,
-		[6328] = true
-	}
-	local function updateMerchantFrame()
-		if (IsAddOnLoaded('GrimoireKeeper')) then return end
-		local guid = UnitGUID("npc")
-		if (guid == nil) then return end
-		local npcId = select(6, strsplit("-", guid))
-		if (npcId == nil) then return end
-		npcId = tonumber(npcId)
-		if (not tomeMerchantIds[npcId]) then return end
-
-		local numMerchantItems = GetMerchantNumItems();
-		for i = 1, MERCHANT_ITEMS_PER_PAGE do
-			local index =
-				(((MerchantFrame.page - 1) * MERCHANT_ITEMS_PER_PAGE) + i);
-			local itemButton = _G["MerchantItem" .. i .. "ItemButton"];
-			local merchantButton = _G["MerchantItem" .. i];
-			if (index <= numMerchantItems) then
-				local merchantItemID = GetMerchantItemID(index)
-				if (wt.TomeIds[merchantItemID]) then
-					if (wt.learnedPetAbilityMap[merchantItemID] == nil) then
-						if (isKnown(index)) then
-							wt.learnedPetAbilityMap[merchantItemID] = true
-						end
-					end
-				end
-				if (wt.learnedPetAbilityMap[merchantItemID]) then
-					SetItemButtonNameFrameVertexColor(merchantButton, 0.5, 0, 0);
-					SetItemButtonSlotVertexColor(merchantButton, 0.5, 0, 0);
-					SetItemButtonTextureVertexColor(itemButton, 0.5, 0, 0);
-					SetItemButtonNormalTextureVertexColor(itemButton, 0.5, 0, 0);
-				end
-			end
-
-		end
-	end
-	hooksecurefunc("MerchantFrame_UpdateMerchantInfo", updateMerchantFrame)
-end
---]]
-
--- deprecated
---[[
-if (wt.currentClass == "HUNTER") then
-	local petAbilityUpdateFrame = CreateFrame("Frame")
-	petAbilityUpdateFrame:SetScript("OnEvent", function()
-		-- Beast training should always have at least one craft, and
-		-- display skill line should always return nil for beast training
-		local numCrafts = GetNumCrafts()
-		if (numCrafts == 0 or GetCraftDisplaySkillLine()) then return end
-		for i = 1, numCrafts do
-			local name, rank = GetCraftInfo(i)
-			if (wt.learnedPetAbilityMap[name] == nil) then
-				wt.learnedPetAbilityMap[name] = {}
-			end
-			-- some locales may not provide a rank, need more investigation
-			if (rank ~= nil) then
-				wt.learnedPetAbilityMap[name][rank] = true
-			end
-		end
-		wt.afterPetUpdate()
-	end)
-	petAbilityUpdateFrame:RegisterEvent("CRAFT_UPDATE")
-	petAbilityUpdateFrame:RegisterEvent("SPELLS_CHANGED")
-
-	local learnedSpellMatchPattern = string.gsub(ERR_LEARN_SPELL_S, "%%s",
-												 "(.+)")
-	local petChatParserFrame = CreateFrame("Frame")
-	petChatParserFrame:SetScript("OnEvent", function(_, _, ...)
-		local matchedSpellName = string.match(select(1, ...),
-											  learnedSpellMatchPattern)
-		if (matchedSpellName ~= nil) then
-			wt.onSpellLearned(matchedSpellName)
-		end
-	end)
-	petChatParserFrame:RegisterEvent("CHAT_MSG_SYSTEM")
-end
---]]

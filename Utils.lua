@@ -69,15 +69,3 @@ function wt:AddOverriddenSpells(...)
 	end
 	self.overriddenSpellsMap = abilityMap			-- Creates new table in global scope and insert data from local table
 end
-
--- Deprecated
---[[
-	@brief		Check if table for pet abilites is filled
-
-	@return		If not nil, return true if spell id is found in table
---]]
---[[
-function wt:IsPetAbility(spellId)
-	return self.PetAbilityIds ~= nil and self.PetAbilityIds[spellId]
-end
---]]

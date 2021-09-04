@@ -38,12 +38,6 @@ local tooltip = CreateFrame("GameTooltip",				-- Type of frame
 	@param		spellInfo
 --]]
 local function setTooltip(spellInfo)
-	-- deprecated
-	--[[
-	if (spellInfo.isItem) then
-		tooltip:SetItemByID(spellInfo.id)
-	elseif (spellInfo.id) then
-	--]]
 	if (spellInfo.id) then
 		tooltip:SetSpellByID(spellInfo.id)
 	else
@@ -268,32 +262,3 @@ function wt.CreateFrame()
 	mainFrame.rows = rows
 	wt.MainFrame = mainFrame
 end
-
-
--- Deprecated
---[[
-if (wt.currentClass ~= "WARLOCK") then return end
-
-local menuFrame = CreateFrame("Frame", "WTWarlockTomeLearnedFrame", UIParent,
-							  "UIDropDownMenuTemplate")
-wt.ClickHook = function(tomeId, afterClick)
-	if (not wt.TomeIds[tomeId]) then return end
-
-	local checked = wt.learnedPetAbilityMap[tomeId]
-	PlaySound(SOUNDKIT.U_CHAT_SCROLL_BUTTON)
-	local menu = {
-		{text = wt.L.TOME_HEADER, isTitle = true, classicChecks = true},
-		{
-			text = wt.L.TOME_LEARNED,
-			checked = checked,
-			func = function()
-				PlaySound(SOUNDKIT.U_CHAT_SCROLL_BUTTON)
-				wt.learnedPetAbilityMap[tomeId] = not checked
-				afterClick()
-			end,
-			isNotRadio = true
-		}
-	}
-	EasyMenu(menu, menuFrame, "cursor", 10, 35, "MENU")
-end
---]]
