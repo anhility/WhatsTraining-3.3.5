@@ -38,6 +38,7 @@ local tooltip = CreateFrame("GameTooltip",				-- Type of frame
 	@param		spellInfo
 --]]
 local function setTooltip(spellInfo)
+	tooltip:ClearLines()
 	if (spellInfo.id) then
 		tooltip:SetSpellByID(spellInfo.id)
 	else
