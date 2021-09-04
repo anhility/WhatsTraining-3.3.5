@@ -23,16 +23,30 @@ local KNOWN_KEY =						"known"
 local COMINGSOON_FONT_COLOR_CODE =		"|cff82c5ff"
 local MISSINGTALENT_FONT_COLOR_CODE =	"|cffffffff"
 
+local function isMountLearned(spellId)
+	local numMounts = GetNumCompanions("MOUNT")
+	if numMounts == 0 then
+		return
+	else
+		local mountSpellId
+		for i = 1, numMounts do
+			mountSpellId = select(3, GetCompanionInfo("MOUNT", i))
+			if mountSpellId == spellId then
+				return true
+			end
+		end
+	end
+end
+
 local function isPreviouslyLearnedAbility(spellId)
 	if (wt.overriddenSpellsMap == nil or not wt.overriddenSpellsMap[spellId]) then
 		return false
 	end
-
 	local spellIndex, knownIndex = 0, 0
 	for i, otherId in ipairs(wt.overriddenSpellsMap[spellId]) do
 		if (otherId == spellId) then spellIndex = i end
 		--if (IsSpellKnown(otherId) or IsPlayerSpell(otherId)) then
-		if (IsSpellKnown(otherId)) then
+		if (IsSpellKnown(otherId) or isMountLearned(otherId)) then
 			knownIndex = i
 		end
 	end
@@ -41,6 +55,7 @@ end
 
 local function isAbilityKnown(spellId)
 	if (IsSpellKnown(spellId) or
+		isMountLearned(spellId) or
 		--IsPlayerSpell(spellId) or
 		isPreviouslyLearnedAbility(spellId)) then
 		return true
@@ -62,8 +77,7 @@ local headers = {
 		name = wt.L.NEXTLEVEL_HEADER,
 		color = COMINGSOON_FONT_COLOR_CODE,
 		key = NEXTLEVEL_KEY
-	},
-	{
+	},{
 		name = wt.L.NOTLEVEL_HEADER,
 		color = RED_FONT_COLOR_CODE,
 		key = NOTLEVEL_KEY
