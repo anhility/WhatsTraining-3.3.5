@@ -15,7 +15,9 @@ local _, wt = ...
 	@brief		Check if the data should be loaded or not
 	@return		If not "MAGE", then return with nothing
 --]]
-if (wt.currentClass ~= "MAGE") then return end
+if (wt.currentClass ~= "MAGE") then
+	return
+end
 
 --[[
 	@brief		Table for trainable spells for each level
