@@ -20,19 +20,20 @@ if (wt.currentClass ~= "PALADIN") then
 end
 
 --[[
-	Paladin Auras are special in that you never have multiple ranks in the spellbook, only the latest one is usable
-	Even so, IsSpellKnown will only return true for your current rank
+	@comment	Some spells when using IsSpellKnown() only return true for the max rank of the learned spells
+				Solved by creating tables with the spell ids for each exclusive category and running them in wt:AddOverriddenSpells()
+				These tables are ordered by rank
 
-	These tables are ordered by rank
+				Paladin Auras are special in that you never have multiple ranks in the spellbook, only the latest one is usable
 --]]
-local devotionAura =			{465,10290,643,10291,1032,10292,10293,27149,48941,48942}
 local layonHands =				{633,2800,10310,27154,48788}
+local devotionAura =			{465,10290,643,10291,1032,10292,10293,27149,48941,48942}
 local retributionAura =			{7294,10298,10299,10300,10301,27150,54043}
 local shadowResistanceAura =	{19876,19895,19896,27151,48943}
 local frostResistanceAura =		{19888,19897,19898,27152,48945}
 local fireResistanceAura =		{19891,19899,19900,27153,48947}
 
-wt:AddOverriddenSpells(devotionAura,layonHands,retributionAura,shadowResistanceAura,frostResistanceAura,fireResistanceAura)
+wt:AddOverriddenSpells(layonHands,devotionAura,retributionAura,shadowResistanceAura,frostResistanceAura,fireResistanceAura)
 
 --[[
 	@brief		Table for trainable spells for each level
@@ -93,7 +94,6 @@ wt.SpellsByLevel = wt.FactionFilter({
 				{id =  5502, cost =   4000},													-- Sense Undead
 				{id = 13819, cost =   3500, faction = "Alliance"},								-- Warhorse
 				{id = 34769, cost =   3500, faction = "Horde"},									-- Summon Warhorse
---				{id =   200, cost =  10000},													-- Polearms
 			},
 	[22] =	{
 				{id = 19835, cost =   4000, requiredIds = {19834}},								-- Blessing of Might (rank 3)
@@ -153,11 +153,10 @@ wt.SpellsByLevel = wt.FactionFilter({
 				{id = 19895, cost =  20000, requiredIds = {19876}},								-- Shadow Resistance Aura (rank 2)
 				{id = 23214, cost =   3500, faction = "Alliance"},								-- Charger
 				{id = 34767, cost =   3500, faction = "Horde"},									-- Summon Charger
---				{id =   750, cost =  20000},													-- Plate Mail
 			},
 	[42] =	{
 				{id = 19837, cost =  21000, requiredIds = {19836}},								-- Blessing of Might (rank 5)
-				{id =  4987, cost =  21000},														-- Cleanse
+				{id =  4987, cost =  21000},													-- Cleanse
 				{id = 19941, cost =  21000, requiredIds = {19940}},								-- Flash of Light (rank 4)
 			},
 	[44] =	{

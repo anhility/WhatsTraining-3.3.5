@@ -1,5 +1,5 @@
 --[[	file meta info
-	@file 		DeathKnight.lua
+	@file 		Druid.lua
 	@brief		Tables of spell IDs for class
 --]]
 
