@@ -11,7 +11,7 @@ They are seperated by categories like **Available Now**, **Coming Soon** and sim
     
     What's Training Example Screenshoot
 
-Known Issues
-____________
- - To be added
+Known Issues/TODO
+_________________
+ - TODO: Finish the code documentation
  
