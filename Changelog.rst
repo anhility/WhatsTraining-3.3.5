@@ -3,7 +3,7 @@ _____
 - Backported from retail to 3.3.5 client
 - Removed deprecated code
 - Updated class skills to WotLK
-- Changed from markdown/.log to reStructuredText
+- Changed from markdown/raw text to reStructuredText
 - Begun code documentation
 
 2.0.2
