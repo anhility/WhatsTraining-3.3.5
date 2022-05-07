@@ -223,7 +223,6 @@ wt.SpellsByLevel = {
 				{id = 11668, cost =  26000, requiredIds = {11667}},								-- Immolate (rank 7)
 				{id = 25309, cost =  26000, requiredIds = {11668}},								-- Immolate (rank 8)
 				{id = 11661, cost =  26000, requiredIds = {11660}},								-- Shadow Bolt (rank 9)
-				{id = 25307, cost =  26000, requiredIds = {11661}},								-- Shadow Bolt (rank 10)
 				{id = 28610, cost =  34000, requiredIds = {11740}},								-- Shadow Ward (rank 4)
 				{id = 30413, cost =   2500, requiredIds = {30283}, requiredTalentId = 30283},	-- Shadowfury (rank 2)
 				{id = 30404, cost =   2500, requiredIds = {30108}, requiredTalentId = 30108},	-- Unstable Affliction (rank 2)
@@ -236,6 +235,7 @@ wt.SpellsByLevel = {
 	[62] =	{
 				{id = 27219, cost =  30000, requiredIds = {11700}},								-- Drain Life (rank 7)
 				{id = 28176, cost =  34000},													-- Fel Armor (rank 1)
+				{id = 25307, cost =  26000, requiredIds = {11661}},								-- Shadow Bolt (rank 10)
 			},
 	[63] =	{
 				{id = 27263, cost =   1300, requiredIds = {18871}, requiredTalentId = 17877},	-- Shadowburn (rank 7)
