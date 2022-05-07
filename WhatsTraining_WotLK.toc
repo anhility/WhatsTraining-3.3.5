@@ -1,6 +1,6 @@
 ## Interface: 30300
 ## Title: What's Training? WotLK
-## Version: 3.0.1
+## Version: 3.0.2
 ## Author: Sveng, Anhility (3.3.5 backport)
 ## Notes: Shows you what spells are available at your class trainer
 
