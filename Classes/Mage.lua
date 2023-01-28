@@ -257,7 +257,6 @@ wt.SpellsByLevel = wt.FactionFilter({
 				{id = 10174, cost =  42000, requiredIds = {10173}},								-- Dampen Magic (rank 5)
 				{id = 10225, cost =  42000, requiredIds = {10223}},								-- Fire Ward (rank 5)
 				{id = 10151, cost =  42000, requiredIds = {10150}},								-- Fireball (rank 11)
-				{id = 25306, cost =  42000, requiredIds = {10151}},								-- Fireball (rank 12)
 				{id = 28609, cost =  42000, requiredIds = {10177}},								-- Frost Ward (rank 5)
 				{id = 25304, cost =  42000, requiredIds = {10181}},								-- Frostbolt (rank 11)
 				{id = 10220, cost =  42000, requiredIds = {10219}},								-- Ice Armor (rank 4)
@@ -274,6 +273,7 @@ wt.SpellsByLevel = wt.FactionFilter({
 			},
 	[62] =	{
 				{id = 27080, cost =  51000, requiredIds = {10202}},								-- Arcane Explosion (rank 7)
+				{id = 25306, cost =  42000, requiredIds = {10151}},								-- Fireball (rank 12)
 				{id = 30482, cost =  51000},													-- Molten Armor (rank 1)
 			},
 	[63] =	{
