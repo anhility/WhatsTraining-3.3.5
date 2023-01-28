@@ -327,7 +327,7 @@ wt.SpellsByLevel = wt.FactionFilter({
 				{id = 33933, cost =   6000, requiredIds = {27133}, requiredTalentId = 11113},	-- Blast Wave (rank 7)
 				{id = 33043, cost =   2500, requiredIds = {33042}, requiredTalentId = 31661},	-- Dragon's Breath (rank 4)
 				{id = 27079, cost = 120000, requiredIds = {27078}},								-- Fire Blast (rank 9)
-				{id = 28692, cost = 150000, requiredIds = {27070}},								-- Fireball (rank 14)
+				{id = 38692, cost = 150000, requiredIds = {27070}},								-- Fireball (rank 14)
 				{id = 32796, cost = 120000, requiredIds = {28609}},								-- Frost Ward (rank 6)
 				{id = 38697, cost = 150000, requiredIds = {27072}},								-- Frostbolt (rank 14)
 				{id = 33405, cost =   6000, requiredIds = {27134}, requiredTalentId = 11426},	-- Ice Barrier (rank 6)
