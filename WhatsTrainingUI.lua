@@ -125,137 +125,142 @@ function wt.Update(frame, forceUpdate)
 	lastOffset = offset
 end
 
-local hasFrameShown = false
+--local hasFrameShown = false
+hasFrameShown = false
 function wt.CreateFrame()
-	local mainFrame = CreateFrame("Frame", "WhatsTrainingFrame", SpellBookFrame)
-	mainFrame:SetPoint("TOPLEFT", SpellBookFrame, "TOPLEFT", 0, 0)
-	mainFrame:SetPoint("BOTTOMRIGHT", SpellBookFrame, "BOTTOMRIGHT", 0, 0)
-	mainFrame:SetFrameStrata("HIGH")
-	local left = mainFrame:CreateTexture(nil, "ARTWORK")
-	left:SetTexture(LEFT_BG_TEXTURE_PATH)
-	left:SetWidth(256)
-	left:SetHeight(512)
-	left:SetPoint("TOPLEFT", mainFrame)
-	local right = mainFrame:CreateTexture(nil, "ARTWORK")
-	right:SetTexture(RIGHT_BG_TEXTURE_PATH)
-	right:SetWidth(128)
-	right:SetHeight(512)
-	right:SetPoint("TOPRIGHT", mainFrame)
-	mainFrame:Hide()
+-- test of fix for issue #1
+	if hasFrameShown then return else
+-- end test
+		local mainFrame = CreateFrame("Frame", "WhatsTrainingFrame", SpellBookFrame)
+		mainFrame:SetPoint("TOPLEFT", SpellBookFrame, "TOPLEFT", 0, 0)
+		mainFrame:SetPoint("BOTTOMRIGHT", SpellBookFrame, "BOTTOMRIGHT", 0, 0)
+		mainFrame:SetFrameStrata("HIGH")
+		local left = mainFrame:CreateTexture(nil, "ARTWORK")
+		left:SetTexture(LEFT_BG_TEXTURE_PATH)
+		left:SetWidth(256)
+		left:SetHeight(512)
+		left:SetPoint("TOPLEFT", mainFrame)
+		local right = mainFrame:CreateTexture(nil, "ARTWORK")
+		right:SetTexture(RIGHT_BG_TEXTURE_PATH)
+		right:SetWidth(128)
+		right:SetHeight(512)
+		right:SetPoint("TOPRIGHT", mainFrame)
+		mainFrame:Hide()
 
-	local skillLineTab = _G["SpellBookSkillLineTab" .. SKILL_LINE_TAB]
---	hooksecurefunc("SpellBookFrame_UpdateSkillLineTabs", function()
-	hooksecurefunc("SpellBookFrame_Update", function()
-		skillLineTab:SetNormalTexture(TAB_TEXTURE_PATH)
-		skillLineTab.tooltip = wt.L.TAB_TEXT
-		skillLineTab:Show()
-		if (SpellBookFrame.selectedSkillLine == SKILL_LINE_TAB) then
-			skillLineTab:SetChecked(true)
-			mainFrame:Show()
-		else
-			skillLineTab:SetChecked(false)
-			mainFrame:Hide()
-		end
-	end)
-	hooksecurefunc("SpellBookFrame_Update", function()
-		if (SpellBookFrame.bookType ~= BOOKTYPE_SPELL) then
-			mainFrame:Hide()
-		elseif (SpellBookFrame.selectedSkillLine == SKILL_LINE_TAB) then
-			mainFrame:Show()
-		end
-	end)
-
-	local scrollBar = CreateFrame("ScrollFrame", "$parentScrollBar", mainFrame,
-								  "FauxScrollFrameTemplate")
-	scrollBar:SetPoint("TOPLEFT", 0, -75)
-	scrollBar:SetPoint("BOTTOMRIGHT", -65, 81)
-	scrollBar:SetScript("OnVerticalScroll", function(self, offset)
-		FauxScrollFrame_OnVerticalScroll(self, offset, ROW_HEIGHT,
-										 function() wt.Update(mainFrame) end)
-	end)
-	scrollBar:SetScript("OnShow", function()
-		if (not hasFrameShown) then
-			wt:RebuildData()
-			hasFrameShown = true
-		end
-		wt.Update(mainFrame, true)
-	end)
-	mainFrame.scrollBar = scrollBar
-
-	local rows = {}
-	for i = 1, MAX_ROWS do
-		local row = CreateFrame("Button", "$parentRow" .. i, mainFrame)
-		row:SetHeight(ROW_HEIGHT)
-		row:EnableMouse(true)
-		row:RegisterForClicks("LeftButtonUp", "RightButtonUp")
-		row:SetScript("OnEnter", function(self)
-			tooltip:SetOwner(self, "ANCHOR_RIGHT")
-			setTooltip(self.currentSpell)
+		local skillLineTab = _G["SpellBookSkillLineTab" .. SKILL_LINE_TAB]
+	--	hooksecurefunc("SpellBookFrame_UpdateSkillLineTabs", function()
+		hooksecurefunc("SpellBookFrame_Update", function()
+			skillLineTab:SetNormalTexture(TAB_TEXTURE_PATH)
+			skillLineTab.tooltip = wt.L.TAB_TEXT
+			skillLineTab:Show()
+			if (SpellBookFrame.selectedSkillLine == SKILL_LINE_TAB) then
+				skillLineTab:SetChecked(true)
+				mainFrame:Show()
+			else
+				skillLineTab:SetChecked(false)
+				mainFrame:Hide()
+			end
 		end)
-		row:SetScript("OnLeave", function() tooltip:Hide() end)
+		hooksecurefunc("SpellBookFrame_Update", function()
+			if (SpellBookFrame.bookType ~= BOOKTYPE_SPELL) then
+				mainFrame:Hide()
+			elseif (SpellBookFrame.selectedSkillLine == SKILL_LINE_TAB) then
+				mainFrame:Show()
+			end
+		end)
 
-		local highlight = row:CreateTexture("$parentHighlight", "HIGHLIGHT")
-		highlight:SetAllPoints()
+		local scrollBar = CreateFrame("ScrollFrame", "$parentScrollBar", mainFrame,
+									  "FauxScrollFrameTemplate")
+		scrollBar:SetPoint("TOPLEFT", 0, -75)
+		scrollBar:SetPoint("BOTTOMRIGHT", -65, 81)
+		scrollBar:SetScript("OnVerticalScroll", function(self, offset)
+			FauxScrollFrame_OnVerticalScroll(self, offset, ROW_HEIGHT,
+											 function() wt.Update(mainFrame) end)
+		end)
+		scrollBar:SetScript("OnShow", function()
+			if (not hasFrameShown) then
+				wt:RebuildData()
+				hasFrameShown = true
+			end
+			wt.Update(mainFrame, true)
+		end)
+		mainFrame.scrollBar = scrollBar
 
-		local spell = CreateFrame("Frame", "$parentSpell", row)
-		spell:SetPoint("LEFT", row, "LEFT")
-		spell:SetPoint("TOP", row, "TOP")
-		spell:SetPoint("BOTTOM", row, "BOTTOM")
+		local rows = {}
+		for i = 1, MAX_ROWS do
+			local row = CreateFrame("Button", "$parentRow" .. i, mainFrame)
+			row:SetHeight(ROW_HEIGHT)
+			row:EnableMouse(true)
+			row:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+			row:SetScript("OnEnter", function(self)
+				tooltip:SetOwner(self, "ANCHOR_RIGHT")
+				setTooltip(self.currentSpell)
+			end)
+			row:SetScript("OnLeave", function() tooltip:Hide() end)
 
-		local spellIcon = spell:CreateTexture(nil, "OVERLAY")
-		spellIcon:SetPoint("TOPLEFT", spell)
-		spellIcon:SetPoint("BOTTOMLEFT", spell)
-		local iconWidth = ROW_HEIGHT
-		spellIcon:SetWidth(iconWidth)
-		local spellLabel = spell:CreateFontString("$parentLabel", "OVERLAY",
-												  "GameFontNormal")
-		spellLabel:SetPoint("TOPLEFT", spell, "TOPLEFT", iconWidth + 4, 0)
-		spellLabel:SetPoint("BOTTOM", spell)
-		spellLabel:SetJustifyV("MIDDLE")
-		spellLabel:SetJustifyH("LEFT")
-		local spellSublabel = spell:CreateFontString("$parentSubLabel",
-													 "OVERLAY",
-													 --"NewSubSpellFont")
-													 "SpellFont_Small")
-		-- test
-		spellSublabel:SetTextColor(255/255, 255/255, 153/255)	-- Works!
-		--test end
-		spellSublabel:SetJustifyH("LEFT")
-		spellSublabel:SetPoint("TOPLEFT", spellLabel, "TOPRIGHT", 2, 0)
-		spellSublabel:SetPoint("BOTTOM", spellLabel)
-		local spellLevelLabel = spell:CreateFontString("$parentLevelLabel",
-													   "OVERLAY",
-													   "GameFontWhite")
-		spellLevelLabel:SetPoint("TOPRIGHT", spell, -4, 0)
-		spellLevelLabel:SetPoint("BOTTOM", spell)
-		spellLevelLabel:SetJustifyH("RIGHT")
-		spellLevelLabel:SetJustifyV("MIDDLE")
-		spellSublabel:SetPoint("RIGHT", spellLevelLabel, "LEFT")
-		spellSublabel:SetJustifyV("MIDDLE")
+			local highlight = row:CreateTexture("$parentHighlight", "HIGHLIGHT")
+			highlight:SetAllPoints()
 
-		local headerLabel = row:CreateFontString("$parentHeaderLabel",
-												 "OVERLAY", "GameFontWhite")
-		headerLabel:SetAllPoints()
-		headerLabel:SetJustifyV("MIDDLE")
-		headerLabel:SetJustifyH("CENTER")
+			local spell = CreateFrame("Frame", "$parentSpell", row)
+			spell:SetPoint("LEFT", row, "LEFT")
+			spell:SetPoint("TOP", row, "TOP")
+			spell:SetPoint("BOTTOM", row, "BOTTOM")
 
-		spell.label = spellLabel
-		spell.subLabel = spellSublabel
-		spell.icon = spellIcon
-		spell.level = spellLevelLabel
-		row.highlight = highlight
-		row.header = headerLabel
-		row.spell = spell
+			local spellIcon = spell:CreateTexture(nil, "OVERLAY")
+			spellIcon:SetPoint("TOPLEFT", spell)
+			spellIcon:SetPoint("BOTTOMLEFT", spell)
+			local iconWidth = ROW_HEIGHT
+			spellIcon:SetWidth(iconWidth)
+			local spellLabel = spell:CreateFontString("$parentLabel", "OVERLAY",
+													  "GameFontNormal")
+			spellLabel:SetPoint("TOPLEFT", spell, "TOPLEFT", iconWidth + 4, 0)
+			spellLabel:SetPoint("BOTTOM", spell)
+			spellLabel:SetJustifyV("MIDDLE")
+			spellLabel:SetJustifyH("LEFT")
+			local spellSublabel = spell:CreateFontString("$parentSubLabel",
+														 "OVERLAY",
+														 --"NewSubSpellFont")
+														 "SpellFont_Small")
+			-- test
+			spellSublabel:SetTextColor(255/255, 255/255, 153/255)	-- Works!
+			--test end
+			spellSublabel:SetJustifyH("LEFT")
+			spellSublabel:SetPoint("TOPLEFT", spellLabel, "TOPRIGHT", 2, 0)
+			spellSublabel:SetPoint("BOTTOM", spellLabel)
+			local spellLevelLabel = spell:CreateFontString("$parentLevelLabel",
+														   "OVERLAY",
+														   "GameFontWhite")
+			spellLevelLabel:SetPoint("TOPRIGHT", spell, -4, 0)
+			spellLevelLabel:SetPoint("BOTTOM", spell)
+			spellLevelLabel:SetJustifyH("RIGHT")
+			spellLevelLabel:SetJustifyV("MIDDLE")
+			spellSublabel:SetPoint("RIGHT", spellLevelLabel, "LEFT")
+			spellSublabel:SetJustifyV("MIDDLE")
 
-		if (rows[i - 1] == nil) then
-			row:SetPoint("TOPLEFT", mainFrame, 26, -78)
-		else
-			row:SetPoint("TOPLEFT", rows[i - 1], "BOTTOMLEFT", 0, -2)
+			local headerLabel = row:CreateFontString("$parentHeaderLabel",
+													 "OVERLAY", "GameFontWhite")
+			headerLabel:SetAllPoints()
+			headerLabel:SetJustifyV("MIDDLE")
+			headerLabel:SetJustifyH("CENTER")
+
+			spell.label = spellLabel
+			spell.subLabel = spellSublabel
+			spell.icon = spellIcon
+			spell.level = spellLevelLabel
+			row.highlight = highlight
+			row.header = headerLabel
+			row.spell = spell
+
+			if (rows[i - 1] == nil) then
+				row:SetPoint("TOPLEFT", mainFrame, 26, -78)
+			else
+				row:SetPoint("TOPLEFT", rows[i - 1], "BOTTOMLEFT", 0, -2)
+			end
+			row:SetPoint("RIGHT", scrollBar)
+
+			rawset(rows, i, row)
 		end
-		row:SetPoint("RIGHT", scrollBar)
-
-		rawset(rows, i, row)
+		mainFrame.rows = rows
+		wt.MainFrame = mainFrame
 	end
-	mainFrame.rows = rows
-	wt.MainFrame = mainFrame
 end
